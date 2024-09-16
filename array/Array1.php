@@ -8,8 +8,8 @@ while (count($numeros) < 50) {
     }
 }
 
-foreach ($numeros as $numero) {
-    echo "$numero,";
+foreach ($numeros as $n) {
+    echo "$n,";
 }
 
 ?>
