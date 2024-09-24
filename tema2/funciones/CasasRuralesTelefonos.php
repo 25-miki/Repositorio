@@ -4,18 +4,20 @@ $fp = fopen("casas_rurales.csv", "r");
 
 $casas_rurales = [];
 
-while (($fila = fgetcsv($fp, 0, ';')) !== false) { //se tiene que poner así porque este csv utiliza ; en vez de comas
-    if (!empty($fila[9])) {
-        $casas_rurales[] = [
-            'Id' => $fila[0], 
-            'Nombre' => $fila[3],
-            'Localidad' => $fila[1],
-            'Telefono' => $fila[9]
-        ];
-    }
+while (!feof($fp)){
+    $linea = fgets($fp);
+    $lista[] = explode(';', $linea);
 }
+
+$header = array_shift($lista);
+foreach ($lista as $ls){
+    $tabla[] = array_combine($header. $ls);
+}
+
 fclose($fp);
 
+
+include 'plantilla_view.php';
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 
 foreach ($casas_rurales as $casas) {
