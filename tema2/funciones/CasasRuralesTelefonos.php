@@ -3,30 +3,41 @@
 $fp = fopen("casas_rurales.csv", "r");
 
 $casas_rurales = [];
+$lista = []; 
 
-while (!feof($fp)){
+while (!feof($fp)) {
     $linea = fgets($fp);
-    $lista[] = explode(';', $linea);
+    
+    if (!empty($linea)) {
+        $lista[] = explode(';',$linea); 
+    }
 }
 
 $header = array_shift($lista);
-foreach ($lista as $ls){
-    $tabla[] = array_combine($header. $ls);
+
+$tabla = []; 
+
+
+foreach ($lista as $ls) {
+    $tabla[] = array_combine($header, $ls);
 }
 
 fclose($fp);
 
+echo "<table>";
 
-include 'plantilla_view.php';
-echo "<table border='1' cellpadding='5' cellspacing='0'>";
+foreach ($tabla as $casas) {
 
-foreach ($casas_rurales as $casas) {
+    if (!empty($casas['telefono'])){
+    
     echo "<tr>";
-    echo "<td>{$casas['Nombre']}</td>";
-    echo "<td>{$casas['Id']}</td>";
-    echo "<td>{$casas['Localidad']}</td>";
-    echo "<td>{$casas['Telefono']}</td>"; 
+    echo "<td>{$casas['nombre']}</td>";
+    echo "<td>{$casas['id']}</td>";
+    echo "<td>{$casas['localidad']}</td>";
+    echo "<td>{$casas['telefono']}</td>";
+
     echo "</tr>";
+    }
 }
 
 echo "</table>";
