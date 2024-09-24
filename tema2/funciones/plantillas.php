@@ -23,20 +23,10 @@ usort($jugadores_atletico, function($a, $b) {
     //parámetrps que le devuelve la función (si es negativo va antes y si es positivo después)
 });
 
-// Imprime la tabla HTML
 echo "<table border='1' cellpadding='5' cellspacing='0'>";
 echo "<tr><th>Dorsal</th><th>Nombre</th><th>Apellidos</th><th>Posición</th><th>Equipo</th></tr>";
 
-foreach ($jugadores_atletico as $jugador) {
-    echo "<tr>";
-    echo "<td>{$jugador['Dorsal']}</td>";
-    echo "<td>{$jugador['Nombre']}</td>";
-    echo "<td>{$jugador['Apellidos']}</td>";
-    echo "<td>{$jugador['Posicion']}</td>";
-    echo "<td>{$jugador['Equipo']}</td>";
-    echo "</tr>";
-}
+include "plantilla_view.php"
 
-echo "</table>";
 
 ?>
