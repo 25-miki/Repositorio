@@ -10,7 +10,7 @@ while (!feof($fp)){
 
 $header = array_shift($lista);
 foreach ($lista as $ls){
-    $tabla[] = array_combine($header. $ls);
+    $tabla[] = array_combine($header, $ls);
 }
 
 fclose($fp);
