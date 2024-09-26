@@ -24,22 +24,7 @@ foreach ($lista as $ls) {
 
 fclose($fp);
 
-echo "<table>";
 
-foreach ($tabla as $casas) {
-
-    if (!empty($casas['telefono'])){
-    
-    echo "<tr>";
-    echo "<td>{$casas['nombre']}</td>";
-    echo "<td>{$casas['id']}</td>";
-    echo "<td>{$casas['localidad']}</td>";
-    echo "<td>{$casas['telefono']}</td>";
-
-    echo "</tr>";
-    }
-}
-
-echo "</table>";
 
 ?>
+<?php include "casas.view.php"; ?>
