@@ -17,8 +17,20 @@ foreach ($lista as $ls){
 
 fclose($fp);
 
+foreach ($tabla as $jugador) {
 
-//include 'plantilla_view.php';
+    if ($jugador['equipo']=="Atlético de Madrid"){
+    
+    echo "<tr>";
+    echo "<td>{$jugador['Dorsal']}</td>";
+    echo "<td>{$jugador['Nombre']}</td>";
+    echo "<td>{$jugador['Apellidos']}</td>";
+    echo "<td>{$jugador['Posicion']}</td>";
+    echo "<td>{$jugador['Equipo']}</td>";
+
+    echo "</tr>";
+    }
+}
 
 
 ?>
