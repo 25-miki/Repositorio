@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,3 +18,14 @@
     </form>
 </body>
 </html>
+
+<?php
+$x = $_GET["X"];
+$y = $_GET["Y"];
+
+echo "<h2>Valores de la variable \$_GET:</h2>";
+    echo "<pre>";
+    print_r($_GET);
+    echo "</pre>";
+
+?>
