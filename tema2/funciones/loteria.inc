@@ -1,18 +1,28 @@
 <?php
 
-function generarNumeroAleatorio($min, $max) {
-    return rand($min, $max);
-}
+function numbers($min, $max, $n){
+    $numeros = [];
 
-function seleccionarNumeros($totalNumeros, $maxNumero) {
-    $numerosSeleccionados = [];
-    while (count($numerosSeleccionados) < $totalNumeros) {
-        $numero = generarNumeroAleatorio(1, $maxNumero);
-        if (!in_array($numero, $numerosSeleccionados)) {
-            $numerosSeleccionados[] = $numero;
+    while (count($numeros) < $n) {
+        $numero = rand($min, $max);
+        
+        if (!in_array($numero, $numeros)) {
+            $numeros[] = $numero;
+        }
+
+    }
+
+    $nombreArchivo = basename(__FILE__);
+    if $nombreArchivo == "euromillones.php"{
+
+        while (count($numeros) < 3) {
+            $numero = rand(1, 9);
+            
+            if (!in_array($numero, $numeros)) {
+                $numeros[] = $numero;
+            }
         }
     }
-    sort($numerosSeleccionados);
-    return $numerosSeleccionados;
+
+    return echo $numeros
 }
-?>
