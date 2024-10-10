@@ -1,6 +1,7 @@
 <?php
 
 function numbers($min, $max, $n){
+    global $nombreArchivo;
     $numeros = [];
 
     while (count($numeros) < $n) {
@@ -9,13 +10,10 @@ function numbers($min, $max, $n){
         if (!in_array($numero, $numeros)) {
             $numeros[] = $numero;
         }
-
     }
 
-    $nombreArchivo = basename(__FILE__);
-    if $nombreArchivo == "euromillones.php"{
-
-        while (count($numeros) < 3) {
+    if ($nombreArchivo == "euromillones.php") {
+        while (count($numeros) < 7) { 
             $numero = rand(1, 9);
             
             if (!in_array($numero, $numeros)) {
@@ -24,5 +22,5 @@ function numbers($min, $max, $n){
         }
     }
 
-    return echo $numeros
+    return $numeros; 
 }

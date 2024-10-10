@@ -1,6 +1,11 @@
 <?php 
 
+$nombreArchivo = basename(__FILE__); 
 
-include loteria.inc;
+include 'loteria.inc'; 
 
-numbers(1,50,5);
+$resultado = numbers(1, 50, 5);
+echo implode(", ", $resultado); 
+
+?>
+

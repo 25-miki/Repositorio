@@ -1,6 +1,9 @@
 <?php 
 
-include loteria.inc;
 
-numbers(1,49,6);
+include 'loteria.inc'; 
 
+$resultado = numbers(1, 50, 5);
+echo implode(", ", $resultado); 
+
+?>
