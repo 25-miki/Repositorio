@@ -9,5 +9,5 @@ session_unset();
 session_destroy();
 
 echo "Tu sesión ha sido cerrada y la cookie ha sido eliminada.<br>";
-echo '<a href="index.php">Volver al inicio</a>';
+echo '<a href="cookies.php">Volver al inicio</a>';
 ?>

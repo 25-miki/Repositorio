@@ -26,7 +26,7 @@ echo "Has visitado esta página " . $_SESSION['visitas'] . " veces durante esta 
 
 // Formulario para ingresar el nombre si no hay cookie
 if (!isset($_COOKIE['nombreUsuario'])) {
-    echo '<form method="POST" action="index.php">
+    echo '<form method="POST" action="cookies.php">
             <label>Introduce tu nombre:</label>
             <input type="text" name="nombre" required>
             <input type="submit" value="Guardar nombre">
