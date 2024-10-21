@@ -8,7 +8,7 @@ include "header.php";
         <h2>Identificación</h2>
         <form action="remember.php" method="POST" class="container mt-5">
             <label for="usuario" class="form-label">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" value="<?php echo isset($_COOKIE['user']) ? $_COOKIE['user'] : ''; ?>" required class="form-control"><br><br>
+            <input type="text" id="usuario" name="usuario" value=""<?php echo isset($_COOKIE['user']) ? $_COOKIE['user'] : ''; ?>" required class="form-control"><br><br>
             
             <label for="password" class="form-label">Contraseña:</label>
             <input type="password" id="password" name="password" value="<?php echo isset($_COOKIE['password']) ? $_COOKIE['password'] : ''; ?>" required class="form-control"><br><br>
