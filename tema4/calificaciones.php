@@ -15,7 +15,7 @@ include "./header.php";
         </form>
     </div>
 
-    <?php <table border="1">
+    <table border="1">
         <tr>
             <th>Nombre</th>
             <th>Nota 1º trim</th>
