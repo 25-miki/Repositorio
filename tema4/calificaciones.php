@@ -42,7 +42,6 @@
             $_SESSION['notas'] = array();
         }
 
-        // Displaying the table only if there are notes
         if (!empty($_SESSION['notas'])): ?>
             <table border="1" style="margin-top: 2rem;">
                 <tr>
