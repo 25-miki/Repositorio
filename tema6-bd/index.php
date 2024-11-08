@@ -1,41 +1,56 @@
 <?php
+
 $host = "localhost";
 $user = "root";
 $password = "";
 $database = "database"; 
 
+//La clase mysqli en PHP es una clase incorporada que permite conectarse y trabajar con bases de datos MySQL
 $conn = new mysqli($host, $user, $password, $database);
 
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    die("Conexión fallida: " . $conn->connect_error); //La función die() en PHP se usa para detener 
+    //inmediatamente la ejecución del script cuando se alcanza ese punto en el código y permite mostrar un mensaje de error
 }
 
-// Create Task
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_task"])) {
-    $title = $conn->real_escape_string($_POST["title"]);
-    $description = $conn->real_escape_string($_POST["description"]);
+// Create
 
-    $query = $conn->prepare("INSERT INTO task (title, description) VALUES (?, ?)");
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_task"])) {
+    // Preparar la consulta SQL con marcadores de posición
+    $query = $conn->prepare("INSERT INTO task (title, description) VALUES (?, ?)"); 
+    //INSERT INTO task (title, description) VALUES (?, ?) es una consulta SQL preparada con dos parámetros (?). 
+    //Estos valores se reemplazarán por los valores reales de $_POST["title"] y $_POST["description"]
+    
     if ($query) {
-        $query->bind_param("ss", $title, $description);
+        // Enlazar los parámetros con la consulta preparada
+        $query->bind_param("ss", $_POST["title"], $_POST["description"]); // "ss" indica dos parámetros string
+        
+        // Ejecutar la consulta
         if ($query->execute()) {
-            header("Location: index.php");
+            // Redirigir si se insertó correctamente
+            header("Location: index.php"); 
             exit();
         } else {
-            echo "Error al registrar la tarea: " . $conn->error;
+            // Manejar errores de ejecución
+            echo "Error al registrar la tarea" . $query->error;
         }
+        
+        // Cerrar la consulta preparada
         $query->close();
     } else {
+        // Manejar errores de preparación
         echo "Error al preparar la consulta: " . $conn->error;
     }
 }
 
+
 // Delete Task
+
 if (isset($_GET["delete_id"])) {
     $id = (int) $_GET["delete_id"];
     $query = $conn->prepare("DELETE FROM task WHERE id = ?");
     if ($query) {
-        $query->bind_param("i", $id);
+        $query->bind_param("i", $id); //"i" significa integer
         $query->execute();
         $query->close();
         header("Location: index.php");
@@ -44,6 +59,7 @@ if (isset($_GET["delete_id"])) {
 }
 
 // Fetch All Tasks
+
 $query = $conn->prepare("SELECT * FROM task");
 if ($query) {
     $query->execute();
@@ -51,7 +67,8 @@ if ($query) {
     $query->close();
 }
 
-// Fetch Task for Editing
+// Editing
+
 $task = null;
 if (isset($_GET["id"])) {
     $id = (int) $_GET["id"];
@@ -62,26 +79,32 @@ if (isset($_GET["id"])) {
         $task = $query->get_result()->fetch_assoc();
         $query->close();
     }
-}
+} //Guarda el resultado en la variable task para crear un segundo formulario de edición con los datos ya incluidos
+
 
 // Update Task
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
-    $id = (int) $_POST["id"];
-    $title = $conn->real_escape_string($_POST["title"]);
-    $description = $conn->real_escape_string($_POST["description"]);
 
-    $query = $conn->prepare("UPDATE task SET title = ?, description = ? WHERE id = ?");
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
+    $query = $conn->prepare("UPDATE task SET title = ?, description = ? WHERE id = ?"); 
+    //Recuerda aquí ACTUALIZAR, no insertar
+    
     if ($query) {
-        $query->bind_param("ssi", $title, $description, $id);
+        $query->bind_param("ssi", $_POST["title"], $_POST["description"], $id);
+        
         if ($query->execute()) {
-            header("Location: index.php");
+            header("Location: index.php"); 
             exit();
         } else {
-            echo "Error al actualizar la tarea: " . $conn->error;
+            echo "Error al registrar la tarea" . $query->error;
         }
+        
         $query->close();
+    } else {
+        echo "Error al preparar la consulta: " . $conn->error;
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
