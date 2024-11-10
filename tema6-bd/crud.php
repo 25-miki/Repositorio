@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_task"])) {
         // Ejecutar la consulta
         if ($query->execute()) {
             // Redirigir si se insertó correctamente
-            header("Location: index.php"); 
+            header("Location: crud.php"); 
             exit();
         } else {
             // Manejar errores de ejecución
@@ -53,7 +53,7 @@ if (isset($_GET["delete_id"])) {
         $query->bind_param("i", $id); //"i" significa integer
         $query->execute();
         $query->close();
-        header("Location: index.php");
+        header("Location: crud.php");
         exit();
     }
 }
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
         $query->bind_param("ssi", $_POST["title"], $_POST["description"], $id);
         
         if ($query->execute()) {
-            header("Location: index.php"); 
+            header("Location: crud.php"); 
             exit();
         } else {
             echo "Error al registrar la tarea" . $query->error;
@@ -174,8 +174,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
                         <td><?php echo htmlspecialchars($row["description"]); ?></td>
                         <td><?php echo htmlspecialchars($row["created_at"]); ?></td>
                         <td>
-                            <a href="index.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="index.php?delete_id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                            <a href="crud.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="crud.php?delete_id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
