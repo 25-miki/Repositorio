@@ -39,6 +39,7 @@ include_once("header.php");
 <?php
   include("listar.php");
 // require_once "videojuego.php";
+// CONECTADB ES UNA FUNCIÓN CREADA EN VIDEOJUEGO.PHP
 // $pdo=conectaDb();
 // $consulta = $pdo->prepare("SELECT * FROM videojuego ");
 //   echo "<table class='table'><thead>";

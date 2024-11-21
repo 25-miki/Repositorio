@@ -4,6 +4,7 @@ $host = "localhost";
 $user = "root";
 $password = "";
 $database = "database";
+$date = date("Y-m-d");
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $password);
@@ -15,8 +16,8 @@ try {
 // Crear
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_task"])) {
     try {
-        $query = $conn->prepare("INSERT INTO task (title, description) VALUES (?, ?)");
-        $query->execute([$_POST["title"], $_POST["description"]]);
+        $query = $conn->prepare("INSERT INTO task (title, description, created) VALUES (?, ?, ?)");
+        $query->execute([$_POST["title"], $_POST["description"], $date]);
         header("Location: crud.php");
         exit();
     } catch (PDOException $e) {
@@ -63,8 +64,8 @@ if (isset($_GET["id"])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
     try {
         $id = (int)$_POST["id"];
-        $query = $conn->prepare("UPDATE task SET title = ?, description = ? WHERE id = ?");
-        $query->execute([$_POST["title"], $_POST["description"], $id]);
+        $query = $conn->prepare("UPDATE task SET title = ?, description = ?, created = ? WHERE id = ?");
+        $query->execute([$_POST["title"], $_POST["description"], $date, $id ]);
         header("Location: crud.php");
         exit();
     } catch (PDOException $e) {
@@ -140,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
                 <td><?php echo htmlspecialchars($row["id"]); ?></td>
                 <td><?php echo htmlspecialchars($row["title"]); ?></td>
                 <td><?php echo htmlspecialchars($row["description"]); ?></td>
-                <td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+                <td><?php echo htmlspecialchars($row["created"]); ?></td>
                 <td>
                     <a href="crud.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-warning">Editar</a>
                     <a href="crud.php?delete_id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
