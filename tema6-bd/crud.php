@@ -3,107 +3,74 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "database"; 
+$database = "database";
 
-//La clase mysqli en PHP es una clase incorporada que permite conectarse y trabajar con bases de datos MySQL
-$conn = new mysqli($host, $user, $password, $database);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error); //La función die() en PHP se usa para detener 
-    //inmediatamente la ejecución del script cuando se alcanza ese punto en el código y permite mostrar un mensaje de error
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $user, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Falló la conexión: ' . $e->getMessage());
 }
 
-// Create
-
+// Crear
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_task"])) {
-    // Preparar la consulta SQL con marcadores de posición
-    $query = $conn->prepare("INSERT INTO task (title, description) VALUES (?, ?)"); 
-    //INSERT INTO task (title, description) VALUES (?, ?) es una consulta SQL preparada con dos parámetros (?). 
-    //Estos valores se reemplazarán por los valores reales de $_POST["title"] y $_POST["description"]
-    
-    if ($query) {
-        // Enlazar los parámetros con la consulta preparada
-        $query->bind_param("ss", $_POST["title"], $_POST["description"]); // "ss" indica dos parámetros string
-        
-        // Ejecutar la consulta
-        if ($query->execute()) {
-            // Redirigir si se insertó correctamente
-            header("Location: crud.php"); 
-            exit();
-        } else {
-            // Manejar errores de ejecución
-            echo "Error al registrar la tarea" . $query->error;
-        }
-        
-        // Cerrar la consulta preparada
-        $query->close();
-    } else {
-        // Manejar errores de preparación
-        echo "Error al preparar la consulta: " . $conn->error;
-    }
-}
-
-
-// Delete Task
-
-if (isset($_GET["delete_id"])) {
-    $id = (int) $_GET["delete_id"];
-    $query = $conn->prepare("DELETE FROM task WHERE id = ?");
-    if ($query) {
-        $query->bind_param("i", $id); //"i" significa integer
-        $query->execute();
-        $query->close();
+    try {
+        $query = $conn->prepare("INSERT INTO task (title, description) VALUES (?, ?)");
+        $query->execute([$_POST["title"], $_POST["description"]]);
         header("Location: crud.php");
         exit();
+    } catch (PDOException $e) {
+        echo "Error al registrar la tarea: " . $e->getMessage();
     }
 }
 
-// Fetch All Tasks
-
-$query = $conn->prepare("SELECT * FROM task");
-if ($query) {
-    $query->execute();
-    $result = $query->get_result();
-    $query->close();
+// Eliminar
+if (isset($_GET["delete_id"])) {
+    try {
+        $id = (int)$_GET["delete_id"];
+        $query = $conn->prepare("DELETE FROM task WHERE id = ?");
+        $query->execute([$id]);
+        header("Location: crud.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error al eliminar la tarea: " . $e->getMessage();
+    }
 }
 
-// Editing
+// Obtener todas las tareas
+try {
+    $query = $conn->prepare("SELECT * FROM task");
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error al obtener las tareas: " . $e->getMessage();
+}
 
+// Editar
 $task = null;
 if (isset($_GET["id"])) {
-    $id = (int) $_GET["id"];
-    $query = $conn->prepare("SELECT * FROM task WHERE id = ?");
-    if ($query) {
-        $query->bind_param("i", $id);
-        $query->execute();
-        $task = $query->get_result()->fetch_assoc();
-        $query->close();
-    }
-} //Guarda el resultado en la variable task para crear un segundo formulario de edición con los datos ya incluidos
-
-
-// Update Task
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
-    $query = $conn->prepare("UPDATE task SET title = ?, description = ? WHERE id = ?"); 
-    //Recuerda aquí ACTUALIZAR, no insertar
-    
-    if ($query) {
-        $query->bind_param("ssi", $_POST["title"], $_POST["description"], $id);
-        
-        if ($query->execute()) {
-            header("Location: crud.php"); 
-            exit();
-        } else {
-            echo "Error al registrar la tarea" . $query->error;
-        }
-        
-        $query->close();
-    } else {
-        echo "Error al preparar la consulta: " . $conn->error;
+    try {
+        $id = (int)$_GET["id"];
+        $query = $conn->prepare("SELECT * FROM task WHERE id = ?");
+        $query->execute([$id]);
+        $task = $query->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener la tarea: " . $e->getMessage();
     }
 }
 
+// Actualizar
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
+    try {
+        $id = (int)$_POST["id"];
+        $query = $conn->prepare("UPDATE task SET title = ?, description = ? WHERE id = ?");
+        $query->execute([$_POST["title"], $_POST["description"], $id]);
+        header("Location: crud.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error al actualizar la tarea: " . $e->getMessage();
+    }
+}
 
 ?>
 
@@ -141,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
                 <div class="card-body">
                     <form method="POST" action="">
                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($task["id"]); ?>">
+                        
                         <div class="form-group">
                             <input type="text" name="title" class="form-control" value="<?php echo htmlspecialchars($task["title"]); ?>" required>
                         </div>
@@ -166,24 +134,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_task"])) {
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row["id"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["title"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["description"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["created_at"]); ?></td>
-                        <td>
-                            <a href="crud.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="crud.php?delete_id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                        </td>
-                    </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center">No hay tareas registradas.</td>
-                    </tr>
-                <?php endif; ?>
+                <?php if (count($result) > 0): ?>
+            <?php foreach ($result as $row): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row["id"]); ?></td>
+                <td><?php echo htmlspecialchars($row["title"]); ?></td>
+                <td><?php echo htmlspecialchars($row["description"]); ?></td>
+                <td><?php echo htmlspecialchars($row["created_at"]); ?></td>
+                <td>
+                    <a href="crud.php?id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="crud.php?delete_id=<?php echo htmlspecialchars($row["id"]); ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
+            <?php else: ?>
+                <tr>
+                    <td colspan="5" class="text-center">No hay tareas registradas.</td>
+                </tr>
+            <?php endif; ?>
+
             </tbody>
         </table>
     </div>
