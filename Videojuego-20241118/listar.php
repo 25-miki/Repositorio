@@ -1,14 +1,15 @@
 <?php
 include_once("header.php");
 ?>
-                <div class="row">
-                    <div class="col-sm-8"><h2>Listado de VideoJuegos</h2></div>
+    <div class="row">
+        <div class="col-sm-8"><h2>Listado de VideoJuegos</h2></div>
 
-                </div>
-            </div>
+    </div>
 <?php
+
   require_once "videojuego.php";
-  $pdo=conectaDb(); // ???!!!
+  
+  $pdo=conectaDb();
 
   echo "<a href='inicio.php'><img src='arrow-down.svg' width='32' height='32'></a>";
 
