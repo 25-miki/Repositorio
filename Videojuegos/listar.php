@@ -12,7 +12,7 @@ include_once("header.php");
 
   echo "<a href='inicio.php'><img src='arrow-down.svg' width='32' height='32'></a>";
 
-  $consulta = $pdo->prepare("SELECT * FROM videojuegos ");
+  $consulta = $pdo->prepare("SELECT * FROM videojuego ");
   echo "<table class='table'><thead>";
   echo "<tr> <th scope='col'>Nombre</th><th scope='col'>genero</th><th scope='col'>PVP</th><th scope='col'>operaciones</th></tr>";
   echo "</thead><tbody>";
