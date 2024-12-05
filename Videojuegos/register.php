@@ -16,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $insercion->bindParam(':password', $hashedPassword);
 
     if ($insercion->execute()) {
-        echo "Usuario registrado con éxito.";
         header("Location: login.php"); // Redirigir al login después del registro
         exit;
     } else {

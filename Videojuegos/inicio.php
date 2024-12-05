@@ -28,12 +28,7 @@ include_once("auth.php");
 				<button type="submit" class="btn btn-success">Guardar datos</button>
 			</div>
 		</form>
-	</div>    
-<footer>
-	<div class="badge bg-primary text-wrap" style="width: 6rem;">
-		This text should wrap.
-	</div>
-</footer> 
+	</div>  
 
 <?php
   include("listar.php");
