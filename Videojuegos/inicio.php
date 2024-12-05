@@ -3,7 +3,7 @@ include_once("../header.php");
 include_once("auth.php");
 ?>
     <div class="row">
-        <div class="col-sm-8"><h2>Agregar <b>Videojuego</b></h2>	
+        <div class="col-sm-8"><h2>Agregar Videojuego</h2>	
 	</div>
 	<div class="row">
 		<form action="insertar.php" method="post">
