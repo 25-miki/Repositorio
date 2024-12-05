@@ -19,6 +19,10 @@ include_once("auth.php");
 				<label>PVP:</label>
 				<input type="real"  name="pvp" id="pvp" class='form-control'  required></textarea>
 			</div>
+			<div class="col-md-9">
+				<label>URL de la imagen:</label>
+				<input type="text" name="imagen" id="imagen" class='form-control' required>
+			</div>
 			<div class="col-md-12 pull-right">
 			<hr>
 				<button type="submit" class="btn btn-success">Guardar datos</button>

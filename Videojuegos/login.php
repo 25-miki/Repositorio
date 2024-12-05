@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
     <div class="container">
+        <br>
         <h2>Iniciar Sesión</h2>
         <?php if (isset($error)) echo "<p class='text-danger'>$error</p>"; ?>
         <form method="POST" action="login.php">
@@ -45,6 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>
+        <br>
+        <a href="register.php" class="btn btn-secondary">Registro</a>
+
     </div>
+
 </body>
 </html>

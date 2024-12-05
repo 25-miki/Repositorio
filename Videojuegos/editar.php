@@ -3,11 +3,12 @@
 require_once "videojuego.php";
 $pdo=conectaDb();
 
-$insercion = $pdo->prepare("update videojuegos set titulo=:titulo, genero=:genero, precio=:precio where id=:id");
+$insercion = $pdo->prepare("update videojuegos set titulo=:titulo, genero=:genero, precio=:precio, imagen=:imagen where id=:id");
 $insercion->bindParam(':id', $_REQUEST['id']);
 $insercion->bindParam(':titulo', $_REQUEST['titulo']);
 $insercion->bindParam(':genero', $_REQUEST['genero']);
 $insercion->bindParam(':precio', $_REQUEST['precio']);
+$insercion->bindParam(':imagen', $_REQUEST['imagen']);
 
 
 

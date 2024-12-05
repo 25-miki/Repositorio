@@ -20,6 +20,7 @@ $registro = $consulta->fetch();
     $titol=$registro['titulo'];
     $genero=$registro['genero']; 
     $precio=$registro['precio'];
+    $imagen=$registro['imagen'];
 
 echo "<div class='row'><form action='editar.php' method='post'>";
 
@@ -31,6 +32,9 @@ echo "  <input type='text' name='genero' id='genero' class='form-control' maxlen
 
 echo "<div class='col-md-3'><label>Precio:</label>";
 echo "  <input type='text' name='precio' id='precio' class='form-control' maxlength='10' value=$precio ></div>";
+
+echo "<div class='col-md-9'><label>URL:</label>";
+echo "  <input type='text' name='imagen' id='imagen' class='form-control' value=$imagen ></div>";
 
 echo "  <input type='hidden' name='id' id='id' class='form-control' maxlength='100' value=$id >";
 echo " <div class='col-md-12 pull-right'><hr><button type='submit' class='btn btn-success'>Guardar datos</button></div></form></div>";

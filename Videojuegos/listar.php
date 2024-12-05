@@ -4,14 +4,18 @@ include_once("auth.php");
 
 ?>
   <div class="row">
-      <div class="col-sm-8"><h2>Listado de VideoJuegos</h2></div>
+      <div class="col-sm-9">
+        <h2>Listado de VideoJuegos</h2>
+        <a href="listarimg.php">
+          <img src="svg/img.svg" style="width: 30px; height: 30px; border-radius:5px" alt="Descripción de la imagen">
+        </a>
+      </div>
   </div>
 <?php
 
   require_once "videojuego.php";
   $pdo=conectaDb();
 
-  echo "<a href='inicio.php'><img src='svg/arrow-down.svg' width='32' height='32'></a>";
 
   $consulta = $pdo->prepare("SELECT * FROM videojuegos ");
   echo "<table class='table'><thead>";
@@ -22,7 +26,6 @@ include_once("auth.php");
 
     while($registro = $consulta->fetch())
       {
-        $titol=$registro['titulo'];
       
       echo "<tr><td>".$registro['titulo']."</td><td>".$registro['genero']."</td><td>".$registro['precio'].
       "</td><td><a href=borrar.php?id=".$registro['id']."><img src='svg/trash-sharp.svg' width='32' height='32'></a>".

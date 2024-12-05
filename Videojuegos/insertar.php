@@ -6,11 +6,13 @@ require_once "videojuego.php";
 
 $pdo=conectaDb();
 
-$insercion = $pdo->prepare("INSERT INTO videojuegos(titulo, genero,precio) VALUES(:titulo, :genero, :precio)");
+$insercion = $pdo->prepare("INSERT INTO videojuegos(titulo, genero,precio, imagen) VALUES(:titulo, :genero, :precio, :imagen)");
 
 $insercion->bindParam(':titulo', $_REQUEST['titulo']);
 $insercion->bindParam(':genero', $_REQUEST['genero']);
 $insercion->bindParam(':precio', $_REQUEST['pvp']);
+$insercion->bindParam(':imagen', $_REQUEST['imagen']);
+
 
 
 if(!$insercion->execute()){
