@@ -1,7 +1,5 @@
 <?php
 
-
-
 // MYSQL: Conexión con la base de datos
 
 function conectaDb()

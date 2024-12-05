@@ -3,7 +3,7 @@
 require_once "videojuego.php";
 $pdo=conectaDb();
 echo $_REQUEST['titulo'];
-$insercion = $pdo->prepare("delete from videojuego where id=:id");
+$insercion = $pdo->prepare("delete from videojuegos where id=:id");
 $insercion->bindParam(':id', $_REQUEST['id']);
 
 
