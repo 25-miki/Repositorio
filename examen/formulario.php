@@ -10,6 +10,8 @@ include("login.php")
 <?php
 
 require_once "config.php";
+
+$profesor = $_SESSION['usuario']; // Obtener el profesor desde la sesión
 $pdo=conectaDb();
 $consulta = $pdo->prepare("SELECT $profesor FROM notas where id=:id");
 $consulta->bindParam(':id', $_REQUEST['id']);

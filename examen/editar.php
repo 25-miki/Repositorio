@@ -3,6 +3,8 @@
 require_once "config.php";
 $pdo=conectaDb();
 
+$profesor = $_SESSION['usuario']; // Obtienes el nombre del profesor desde la sesión.
+
 $insercion = $pdo->prepare("update notas set $username where id=:id");
 $insercion->bindParam(':id', $_REQUEST['id']);
 $insercion->bindParam( $profesor, $_REQUEST[$profesor]);

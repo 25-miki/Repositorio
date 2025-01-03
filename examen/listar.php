@@ -1,6 +1,5 @@
 <?php
 include("header.php");
-include("auth.php");
 include("login.php")
 
 ?>
@@ -11,12 +10,15 @@ include("login.php")
   </div>
 <?php
 
+$profesor = $_SESSION['usuario']; // Asumimos que el nombre del profesor está guardado en la sesión
+
+
   require_once "config.php";
   $pdo=conectaDb();
 
   echo "<table class='table'><thead>";
-  echo "<tr> <th scope='col'>Nombre</th><th scope='col'>Apellido1</th><th scope='col'>Apellido2</th><th scope='col'>Nota Profesor1</th>
-  <th scope='col'>Nota profesor2</th><th scope='col'>Nota Profesor3</th><th scope='col'>Tutor</th><th scope='col'>Operaciones</th></tr>";
+  echo "<tr> <th scope='col'>Nombre</th><th scope='col'>Apellido1</th><th scope='col'>Apellido2</th><th scope='col'>".$profesor."</th>
+  <th scope='col'>Operaciones</th></tr>";
   echo "</thead><tbody>";
 
   if($profesor === "admin"){
@@ -34,7 +36,7 @@ include("login.php")
   echo "</tbody></table>";
   }
   else{
-    $consulta = $pdo->prepare("SELECT nombre, apellido1, apellido2, $profesor FROM notas  ");
+    $consulta = $pdo->prepare("SELECT id, nombre, apellido1, apellido2, $profesor FROM notas  ");
     $consulta->execute();
 
     while($registro = $consulta->fetch())
