@@ -28,6 +28,19 @@ Route::get('tabla/{numero?}', function($numero="3"){
     }
 });
 
-Route::get('/', function () {
-    return view('inicio');
-    });
+
+Route::view('/', 'inicio', ['nombre' => 'Miki']);
+
+Route::get('listado', function() {
+    $libros = array(
+    array("titulo" => "El juego de Ender",
+    "autor" => "Orson Scott Card"),
+    array("titulo" => "La tabla de Flandes",
+    "autor" => "Arturo Pérez Reverte"),
+    array("titulo" => "La historia interminable",
+    "autor" => "Michael Ende"),
+    array("titulo" => "El Señor de los Anillos",
+    "autor" => "J.R.R. Tolkien")
+    );
+    return view('listado', compact('libros'));
+    })->name('listado_libros');
