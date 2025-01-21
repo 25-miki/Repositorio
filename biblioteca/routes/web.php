@@ -43,4 +43,14 @@ Route::get('listado', function() {
     "autor" => "J.R.R. Tolkien")
     );
     return view('listado', compact('libros'));
-    })->name('listado_libros');
+})->name('listado_libros');
+
+use App\Http\Controllers\PruebaController;
+Route::get('prueba', PruebaController::class)->name('prueba');
+
+use App\Http\Controllers\LibroController;
+Route::get('libros', [LibroController::class, 'index']);
+Route::get('libros/{id}', [LibroController::class, 'show']);
+
+Route::resource('libros', LibroController::class)->only(['index', 'show',
+'create', 'edit']);
