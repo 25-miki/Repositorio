@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.registro {
+    display: grid;
+    grid-template-columns: 45vw 5vw 50vw;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 5vw;
+    align-items: center;
+
+}
+
+.reg {
+    align-items: normal;
+    width: 40vw !important;
+    margin-top: 40px !important;
+    margin-left: 150px !important;
+}
+
+.reg form * {
+    margin: 5px 0px !important;
+    padding: 5px 0px  !important;
+}
+
+.reg input {
+    padding: 5px !important;
+    margin-left: 15px !important;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+}
+.container form * {
+    margin: 5px;
+    padding: 5px;
+}
+
+button {
+    color: white;
+    background-color: rgb(0, 151, 35);
+    border: 0px;
+    padding: 10px !important;
+    margin-top: 20px !important;
+    border-radius: 5px;
+}

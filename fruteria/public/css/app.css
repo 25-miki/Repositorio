@@ -1,0 +1,114 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.alert {
+    background-color: #d4edda;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #155724;
+    border-radius: 5px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card p {
+    color: #555;
+}
+
+.btn {
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.botones{   
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-carrito {
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    border: 0px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+nav {
+    background-color: #009e4a;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+
+}
+
+nav a:hover {
+    color: #abff04;
+}
+
+.frutas{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
